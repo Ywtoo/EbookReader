@@ -37,6 +37,7 @@ dependencies:
   permission_handler: ^10.2.0 # Gerenciar permissões no dispositivo
   dio: ^4.0.6 # Requisições HTTP avançadas
   path_provider: ^2.0.11 # Acessar diretórios do dispositivo
+  epub_view: ^3.2.0
 
 dev_dependencies:
   flutter_test:

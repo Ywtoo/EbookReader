@@ -2,9 +2,9 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 import '../models/book.dart';
 
-/// Classe responsável por interagir com a API de livros
+/// API com a lista de livros API gratuita
 class BookApi {
-  static const String apiUrl = 'https://pub.dev/packages/vocsy_epub_viewer';
+  static const String apiUrl = 'https://dummyjson.com/c/13e7-c5ce-4070-80c0';
 
   /// Método estático para buscar a lista de livros
   static Future<List<Book>> fetchBooks() async {

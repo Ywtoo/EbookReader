@@ -27,14 +27,16 @@ environment:
 # dependencies can be manually updated by changing the version numbers below to
 # the latest version available on pub.dev. To see which dependencies have newer
 # versions available, run `flutter pub outdated`.
+
 dependencies:
   flutter:
     sdk: flutter
-
-
-  # The following adds the Cupertino Icons font to your application.
-  # Use with the CupertinoIcons class for iOS style icons.
-  cupertino_icons: ^1.0.8
+  http: ^0.13.5 # Requisições HTTP
+  vocsy_epub_viewer: ^3.0.0 # Exibir arquivos ePub
+  shared_preferences: ^2.0.15 # Armazenar favoritos localmente
+  permission_handler: ^10.2.0 # Gerenciar permissões no dispositivo
+  dio: ^4.0.6 # Requisições HTTP avançadas
+  path_provider: ^2.0.11 # Acessar diretórios do dispositivo
 
 dev_dependencies:
   flutter_test:

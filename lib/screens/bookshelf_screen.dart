@@ -1,8 +1,9 @@
-import 'package:flutter/material.dart'; 
-import '../api/book_api.dart'; 
-import '../models/book.dart'; 
-import '../widgets/book_cover.dart'; 
-import 'book_details_screen.dart'; 
+import 'package:flutter/material.dart';
+import '../api/book_api.dart';
+import '../models/book.dart';
+import '../widgets/book_cover.dart';
+import 'book_details_screen.dart';
+import '../widgets/favorite_ribbon.dart';
 
 class BookshelfScreen extends StatefulWidget {
   const BookshelfScreen({super.key});
@@ -12,51 +13,73 @@ class BookshelfScreen extends StatefulWidget {
 }
 
 class _BookshelfScreenState extends State<BookshelfScreen> {
-  late Future<List<Book>> _booksFuture; // Futuro para a lista de livros
+  late Future<List<Book>> _booksFuture;
 
-  @override
+   @override
   void initState() {
     super.initState();
-    _booksFuture = BookApi.fetchBooks(); // Inicia a busca pelos livros
+    _booksFuture = BookApi.fetchBooks().then((books) {
+      // Carrega o estado de favorito de cada livro ao buscar a lista
+      for (var book in books) {
+        book.loadFavoriteStatus();
+      }
+      return books;
+    });
   }
-
+  //itens ta tela principal
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Estante de Livros'),
       ),
-      body: FutureBuilder<List<Book>>( 
+      body: FutureBuilder<List<Book>>(
         future: _booksFuture,
         builder: (context, snapshot) {
           if (snapshot.hasData) {
             return GridView.builder(
               gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 3, 
-                crossAxisSpacing: 10,
-                mainAxisSpacing: 10,
+                crossAxisCount: 3,
+                crossAxisSpacing: 15,
+                mainAxisSpacing: 100,
               ),
-              padding: const EdgeInsets.all(10),
-              itemCount: snapshot.data!.length,
+               padding: const EdgeInsets.all(10),
+              itemCount: snapshot.data!.length, // Número normal de livros
               itemBuilder: (context, index) {
-                final book = snapshot.data![index];
+                final book = snapshot.data![index]; // Acesse o livro diretamente
                 return GestureDetector(
                   onTap: () {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => BookDetailsScreen(book: book), // Navega para os detalhes do livro
+                        builder: (context) => BookDetailsScreen(book: book),
                       ),
                     );
                   },
-                  child: BookCover(book: book), // Exibe a capa do livro
+                  child: Stack( // Stack para sobrepor a fita e a capa
+                    children: [
+                      BookCover(book: book),
+                      Positioned( // Posiciona a fita
+                        top: 10.0,
+                        right: 10.0,
+                        child: FavoriteRibbon(
+                          isFavorite: book.isFavorite,
+                          onTap: () {
+                            setState(() {
+                              book.toggleFavorite();
+                            });
+                          },
+                        ),
+                      ),
+                    ],
+                  ),
                 );
               },
             );
           } else if (snapshot.hasError) {
-            return const Center(child: Text('Erro ao carregar livros')); // Mensagem de erro
+            return const Center(child: Text('Erro ao carregar livros'));
           }
-          return const Center(child: CircularProgressIndicator()); // Indicador de carregamento
+          return const Center(child: CircularProgressIndicator());
         },
       ),
     );

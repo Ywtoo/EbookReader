@@ -1,5 +1,5 @@
-import 'package:flutter/material.dart'; 
-import '../models/book.dart'; 
+import 'package:flutter/material.dart';
+import '../models/book.dart';
 import 'package:dio/dio.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:path_provider/path_provider.dart';
@@ -10,14 +10,14 @@ class BookDetailsScreen extends StatefulWidget {
   final Book book;
 
   // Construtor da classe BookDetailsScreen que requer um livro
-  const BookDetailsScreen({super.key, required this.book}); 
+  const BookDetailsScreen({super.key, required this.book});
 
   @override
   _BookDetailsScreenState createState() => _BookDetailsScreenState(); // Cria o estado para a tela de detalhes do livro
 }
 
 class _BookDetailsScreenState extends State<BookDetailsScreen> {
-  bool _isDownloading = false; 
+  bool _isDownloading = false;
   double _downloadProgress = 0.0;
 
   Future<void> _downloadAndOpenBook() async {
@@ -38,7 +38,7 @@ class _BookDetailsScreenState extends State<BookDetailsScreen> {
     }
 
     setState(() {
-      _isDownloading = true; 
+      _isDownloading = true;
     });
 
     try {
@@ -63,10 +63,10 @@ class _BookDetailsScreenState extends State<BookDetailsScreen> {
       // 3. Abrir o ePub com EpubViewer
       VocsyEpub.setConfig(
         themeColor: Theme.of(context).primaryColor,
-        identifier: "iosBook", 
+        identifier: "iosBook",
         scrollDirection: EpubScrollDirection.VERTICAL,
         allowSharing: true,
-        enableTts: true, 
+        enableTts: true,
         nightMode: false,
       );
 
@@ -84,7 +84,7 @@ class _BookDetailsScreenState extends State<BookDetailsScreen> {
       });
     }
   }
-
+  //Itens na tela quando clica no livro
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -98,20 +98,20 @@ class _BookDetailsScreenState extends State<BookDetailsScreen> {
             Image.network(
               widget.book.coverUrl,
               height: 200,
-              width: 200,
+              width: 150,
               fit: BoxFit.cover,
             ),
             const SizedBox(height: 20),
             Text(
               widget.book.title,
-              style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+              style: const TextStyle(fontSize: 12, fontWeight: FontWeight.bold),
             ),
             const SizedBox(height: 10),
             Text(
               'by ${widget.book.author}',
               style: const TextStyle(fontSize: 16),
             ),
-            const SizedBox(height: 30), 
+            const SizedBox(height: 30),
             if (_isDownloading)
               CircularProgressIndicator(value: _downloadProgress)
             else

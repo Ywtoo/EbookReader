@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'screens/bookshelf_screen.dart';
 import 'screens/favorites_screen.dart';
 
+
 void main() {
   runApp(const MyApp()); // Inicia o aplicativo
 }

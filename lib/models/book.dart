@@ -1,10 +1,11 @@
-class Book{
-  //Pega as informaçoes dos livros
+import 'package:shared_preferences/shared_preferences.dart';
+
+class Book {
   final String title;
   final String author;
   final String coverUrl;
   final String downloadUrl;
-  bool isFavorite; //indica se é favorito
+  bool isFavorite;
 
   //Inicializa todas as propriedades obrigatorias(favorite fica como opcional)
   Book({
@@ -15,7 +16,6 @@ class Book{
     this.isFavorite = false,
   });
 
-  //Cria um objeto a partir de um JSON
   factory Book.fromJson(Map<String, dynamic>json) {
     return Book(
       title: json['title'],
@@ -26,6 +26,7 @@ class Book{
     );
   }
 
+
   //Reverte para json de novo
   Map<String, dynamic> toJson() {
     return {
@@ -35,5 +36,19 @@ class Book{
       'download_url': downloadUrl,
       'isFavorite': isFavorite,
     };
+  }
+  //Tentativa de fazer os favoritos
+  Future<void> toggleFavorite() async {
+    final prefs = await SharedPreferences.getInstance();
+    final encodedTitle = Uri.encodeComponent(title);
+    isFavorite = !isFavorite;
+    await prefs.setBool('favorite_$encodedTitle', isFavorite);
+  }
+
+  // Método para carregar o estado de favorito
+  Future<void> loadFavoriteStatus() async {
+    final prefs = await SharedPreferences.getInstance();
+    final encodedTitle = Uri.encodeComponent(title);
+    isFavorite = prefs.getBool('favorite_$encodedTitle') ?? false;
   }
 }

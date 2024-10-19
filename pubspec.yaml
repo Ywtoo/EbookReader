@@ -31,13 +31,12 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  http: ^0.13.5 # Requisições HTTP
+  http: ^1.2.2 # Requisições HTTP
   vocsy_epub_viewer: ^3.0.0 # Exibir arquivos ePub
   shared_preferences: ^2.0.15 # Armazenar favoritos localmente
-  permission_handler: ^10.2.0 # Gerenciar permissões no dispositivo
-  dio: ^4.0.6 # Requisições HTTP avançadas
+  permission_handler: ^11.3.1 # Gerenciar permissões no dispositivo
+  dio: ^5.7.0 # Requisições HTTP avançadas
   path_provider: ^2.0.11 # Acessar diretórios do dispositivo
-  epub_view: ^3.2.0
 
 dev_dependencies:
   flutter_test:
@@ -48,7 +47,7 @@ dev_dependencies:
   # activated in the `analysis_options.yaml` file located at the root of your
   # package. See that file for information about deactivating specific lint
   # rules and activating additional ones.
-  flutter_lints: ^4.0.0
+  flutter_lints: ^5.0.0
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
